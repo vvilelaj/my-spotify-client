@@ -50,8 +50,7 @@ namespace my_spotify_client.Controllers
 
             if (SessionManager.SpotifyToken == null) return View(indexModel);
 
-            var userProfile = await SpotifyProvider.GetUserProfileAsync();
-            indexModel.UserProfile =  userProfile;
+            indexModel.UserProfile = await SpotifyProvider.GetUserProfileAsync();
 
             return View(indexModel);
         }
@@ -59,7 +58,7 @@ namespace my_spotify_client.Controllers
         public ActionResult RequestAuthorizationToSpotify()
         {
             SessionManager.State = DateTime.Now.Ticks.ToString();
-            return Redirect(SpotifyProvider.GetSpotifyAuthorizationUrl(SessionManager.State));
+            return Redirect(SpotifyProvider.GetAuthorizationUrl(SessionManager.State));
         }
 
         public async Task<ActionResult> ProccessSpotifyResponse(string code = "", string error = "", string state = "")
@@ -67,7 +66,8 @@ namespace my_spotify_client.Controllers
             if (!string.IsNullOrWhiteSpace(error) || 
                 !state.Equals(SessionManager.State)) return View(new ProccessSpotifyResponseModel(true, error));
 
-            SessionManager.SpotifyToken = await SpotifyProvider.GetTokenAsync(code);
+            await SpotifyProvider.LoadAuthorizationTokenAsync(code);
+
             return View(new ProccessSpotifyResponseModel(false, string.Empty));
         }
     }
