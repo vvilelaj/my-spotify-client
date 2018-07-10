@@ -36,7 +36,6 @@ namespace my_spotify_client.Providers.SpotifyProvider
             public static readonly string Token = "/api/token";
         }
 
-
         protected async Task<SpotifyToken> GetTokenAsync()
         {
             var token = SessionManager.SpotifyToken;

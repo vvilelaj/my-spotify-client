@@ -31,19 +31,12 @@ namespace my_spotify_client.Providers.SpotifyProvider
             }
         }
 
-        public async Task<User> GetUserProfileAsync()
+        public UserProfileProvider UserProfile
         {
-            var httpClient = new HttpClient()
+            get
             {
-                BaseAddress = new Uri(AppSettingsManager.SpotifyBaseUrl)
-            };
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Authorization =new AuthenticationHeaderValue("Bearer", GetTokenAsync().Result.Access_Token);
-
-            var userProfile = await httpClient.GetAsync(AppSettingsManager.SpotifyBaseUrl + "/v1/me").Result.Content.ReadAsAsync<User>();
-
-            return userProfile;
+                return UserProfileProvider.Instance();
+            }
         }
-
     }
 }
