@@ -12,7 +12,7 @@ using my_spotify_client.Providers.SpotifyProvider.Entities;
 
 namespace my_spotify_client.Providers.SpotifyProvider
 {
-    public class SpotifyProvider
+    public class SpotifyProvider : SpotifyBaseProvider
     {
         private static SpotifyProvider _instance;
 
@@ -21,22 +21,6 @@ namespace my_spotify_client.Providers.SpotifyProvider
             if (_instance == null) _instance = new SpotifyProvider();
 
             return _instance;
-        }
-
-        public AppSettingsManager AppSettingsManager
-        {
-            get
-            {
-                return AppSettingsManager.Instance();
-            }
-        }
-
-        private SessionManager SessionManager
-        {
-            get
-            {
-                return SessionManager.Instance();
-            }
         }
 
         public static class SpotifyEndPoints
@@ -75,48 +59,6 @@ namespace my_spotify_client.Providers.SpotifyProvider
             request.Headers.Authorization = new AuthenticationHeaderValue("Basic", GetAuthenticationHeaderInBase64());
 
             SessionManager.SpotifyToken = await httpClient.SendAsync(request).Result.Content.ReadAsAsync<SpotifyToken>();
-        }
-
-        public async Task<SpotifyToken> GetTokenAsync()
-        {
-            var token = SessionManager.SpotifyToken;
-            var now = DateTime.Now;
-            var seconds = (now - token.CreatedDate).Seconds;
-            if (token.Expires_In - seconds < 10)
-            {
-                var newToken = await GetRefreshedToken();
-                token.Access_Token = newToken.Access_Token;
-                token.CreatedDate = newToken.CreatedDate;
-                token.Expires_In = newToken.Expires_In;
-                token.Scope = newToken.Scope;
-                SessionManager.SpotifyToken = token;
-            }
-            return token;
-        }
-
-        private async Task<SpotifyToken> GetRefreshedToken()
-        {
-            var httpClient = new HttpClient
-            {
-                BaseAddress = new Uri(AppSettingsManager.SpotifyAccountsBaseAddressUrl)
-            };
-            var request = new HttpRequestMessage(HttpMethod.Post, SpotifyEndPoints.token);
-            var keyValues = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("grant_type", "refresh_token"),
-                new KeyValuePair<string, string>("refresh_token", SessionManager.SpotifyToken.Refresh_Token),
-            };
-            request.Content = new FormUrlEncodedContent(keyValues);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", GetAuthenticationHeaderInBase64());
-            return await httpClient.SendAsync(request).Result.Content.ReadAsAsync<SpotifyToken>();
-        }
-
-        private string GetAuthenticationHeaderInBase64()
-        {
-            var authValue = AppSettingsManager.ClientId + ":" + AppSettingsManager.ClientSecret;
-            var bytes = Encoding.UTF8.GetBytes(authValue);
-            var authValueBase64 = Convert.ToBase64String(bytes);
-            return authValueBase64;
         }
 
         public async Task<User> GetUserProfileAsync()
