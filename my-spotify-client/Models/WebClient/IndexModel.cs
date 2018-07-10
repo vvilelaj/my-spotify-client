@@ -10,8 +10,8 @@ namespace my_spotify_client.Models.WebClient
     {
         public IndexModel()
         {
-            UserProfile=new UserProfile();
+            UserProfile=new User();
         }
-        public UserProfile UserProfile { get; set; }
+        public User UserProfile { get; set; }
     }
 }

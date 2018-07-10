@@ -22,7 +22,7 @@
         &nbsp;
     </div>
 </div>
-@if (string.IsNullOrWhiteSpace(Model.UserProfile.id))
+@if (string.IsNullOrWhiteSpace(Model.UserProfile.Id))
 {
     <div class="row">
         <div class="col-md-12 text-center">
@@ -36,19 +36,19 @@ else
 {
     <div class="row">
         <div class="col-md-12 text-center">
-            User Id : @Model.UserProfile.id
+            User Id : @Model.UserProfile.Id
         </div>
     </div>
     <div class="row">
         <div class="col-md-12 text-center">
-            User Name : @Model.UserProfile.display_name
+            User Name : @Model.UserProfile.Display_Name
         </div>
     </div>
-    if (Model.UserProfile.images.Count > 0)
+    if (Model.UserProfile.Images.Count > 0)
     {
         <div class="row">
             <div class="col-md-12 text-center">
-                <img src="@Model.UserProfile.images[0].url" />
+                <img src="@Model.UserProfile.Images[0].url" />
             </div>
         </div>
     }

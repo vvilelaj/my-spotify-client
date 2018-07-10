@@ -119,7 +119,7 @@ namespace my_spotify_client.Providers.SpotifyProvider
             return authValueBase64;
         }
 
-        public async Task<UserProfile> GetUserProfileAsync()
+        public async Task<User> GetUserProfileAsync()
         {
             var httpClient = new HttpClient()
             {
@@ -128,7 +128,7 @@ namespace my_spotify_client.Providers.SpotifyProvider
             httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.Authorization =new AuthenticationHeaderValue("Bearer", GetTokenAsync().Result.Access_Token);
 
-            var userProfile = await httpClient.GetAsync(AppSettingsManager.SpotifyBaseUrl + "/v1/me").Result.Content.ReadAsAsync<UserProfile>();
+            var userProfile = await httpClient.GetAsync(AppSettingsManager.SpotifyBaseUrl + "/v1/me").Result.Content.ReadAsAsync<User>();
 
             return userProfile;
         }

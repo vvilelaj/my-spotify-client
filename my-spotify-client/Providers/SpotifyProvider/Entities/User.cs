@@ -5,17 +5,17 @@ using System.Web;
 
 namespace my_spotify_client.Providers.SpotifyProvider.Entities
 {
-    public class UserProfile
+    public class User
     {
-        public UserProfile()
+        public User()
         {
-            images= new List<Image>();
+            Images= new List<Image>();
             CreatedDate = DateTime.Now;
         }
-        public string id { get; set; }
-        public string display_name { get; set; }
-        public string href { get; set; }
-        public List<Image> images { get; set; }
+        public string Id { get; set; }
+        public string Display_Name { get; set; }
+        public string Href { get; set; }
+        public List<Image> Images { get; set; }
         public DateTime CreatedDate { get; set; }
     }
 }
