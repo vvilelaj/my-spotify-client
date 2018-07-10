@@ -142,6 +142,7 @@
     <Compile Include="Models\ProccessSpotifyResponseModel.cs" />
     <Compile Include="Models\SpotifyToken.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\SpotifyProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
