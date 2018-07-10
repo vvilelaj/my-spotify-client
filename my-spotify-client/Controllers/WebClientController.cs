@@ -9,12 +9,21 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using my_spotify_client.Common;
+using my_spotify_client.Common.SessionManager;
 using my_spotify_client.Models;
 
 namespace my_spotify_client.Controllers
 {
     public partial class WebClientController : Controller
     {
+        private SessionManager SessionManager
+        {
+            get
+            {
+                return SessionManager.Instance();
+            }
+        }
+
         public string SpotifyAccountsUrl
         {
             get
@@ -47,56 +56,31 @@ namespace my_spotify_client.Controllers
             }
         }
 
-        public string State
-        {
-            get
-            {
-                return Session[SessionKey.STATE].ToString();
-            }
-            set
-            {
-                Session[SessionKey.STATE] = value;
-            }
-        }
-
-        public SpotifyToken SpotifyToken
-        {
-            get
-            {
-                return (SpotifyToken)Session[SessionKey.SPOTIFY_TOKEN];
-            }
-            set
-            {
-                Session[SessionKey.SPOTIFY_TOKEN] = value;
-            }
-        }
-
         public ActionResult Index()
         {
-            if (SpotifyToken == null) return View();//View(null);
+            if (SessionManager.SpotifyToken == null) return View();//View(null);
             return null;
         }
 
-
         public ActionResult RequestAuthorizationToSpotify()
         {
-            State = DateTime.Now.Ticks.ToString();
+            SessionManager.State = DateTime.Now.Ticks.ToString();
             //
             var authorizeUrl = SpotifyAccountsUrl + "/authorize?";
             authorizeUrl += "client_id=" + ClientId + "&";
             authorizeUrl += "response_type=code&";
             authorizeUrl += "redirect_uri=" + RedirectUri + "&";
             authorizeUrl += "scope=user-read-private user-read-email&";
-            authorizeUrl += "state=" + State;
+            authorizeUrl += "state=" + SessionManager.State;
 
             return Redirect(authorizeUrl);
         }
 
         public async Task<ActionResult> ProccessSpotifyResponse(string code = "", string error = "", string state = "")
         {
-            if (!string.IsNullOrWhiteSpace(error) || !state.Equals(State)) return View(new ProccessSpotifyResponseModel(true,error));
+            if (!string.IsNullOrWhiteSpace(error) || !state.Equals(SessionManager.State)) return View(new ProccessSpotifyResponseModel(true,error));
 
-            SpotifyToken = await GetSpotifyTokenAsync(code);
+            SessionManager.SpotifyToken = await GetSpotifyTokenAsync(code);
 
             return View(new ProccessSpotifyResponseModel(false,string.Empty));
         }
