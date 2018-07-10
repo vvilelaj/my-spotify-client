@@ -12,6 +12,7 @@ using my_spotify_client.Common;
 using my_spotify_client.Common.AppSettingsManager;
 using my_spotify_client.Common.SessionManager;
 using my_spotify_client.Models;
+using my_spotify_client.Models.WebClient;
 using my_spotify_client.Providers;
 using my_spotify_client.Providers.SpotifyProvider;
 
@@ -43,12 +44,16 @@ namespace my_spotify_client.Controllers
             }
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            if (SessionManager.SpotifyToken == null) return View();
+            var indexModel = new IndexModel {  };
 
-            //var 
-            return null;
+            if (SessionManager.SpotifyToken == null) return View(indexModel);
+
+            var userProfile = await SpotifyProvider.GetUserProfileAsync();
+            indexModel.UserProfile =  userProfile;
+
+            return View(indexModel);
         }
 
         public ActionResult RequestAuthorizationToSpotify()

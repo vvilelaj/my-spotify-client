@@ -17,7 +17,7 @@ namespace my_spotify_client.Common.AppSettingsManager
             return _instance;
         }
 
-        public string SpotifyAccountsUrl
+        public string SpotifyAccountsBaseAddressUrl
         {
             get
             {
@@ -46,6 +46,14 @@ namespace my_spotify_client.Common.AppSettingsManager
             get
             {
                 return ConfigurationManager.AppSettings[AppSettingsKey.REDIRECT_URI];
+            }
+        }
+
+        public string SpotifyBaseUrl
+        {
+            get
+            {
+                return ConfigurationManager.AppSettings[AppSettingsKey.SPOTIFY_BASE_ADDRESS];
             }
         }
     }
