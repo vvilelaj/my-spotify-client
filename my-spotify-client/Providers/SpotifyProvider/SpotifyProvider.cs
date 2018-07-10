@@ -9,6 +9,7 @@ using my_spotify_client.Common.AppSettingsManager;
 using my_spotify_client.Common.SessionManager;
 using my_spotify_client.Models;
 using my_spotify_client.Providers.SpotifyProvider.Entities;
+using my_spotify_client.Providers.SpotifyProvider.Providers;
 
 namespace my_spotify_client.Providers.SpotifyProvider
 {
