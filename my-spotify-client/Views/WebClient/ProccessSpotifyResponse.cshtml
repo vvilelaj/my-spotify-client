@@ -1,15 +1,44 @@
-﻿
+﻿@model my_spotify_client.Models.ProccessSpotifyResponseModel
+
 @{
     ViewBag.Title = "ProccessSpotifyResponse";
 }
 
-<div class="row">
-    <div class="col-md-12 text-center">
-        <h1>No se pudo auntenticar con spotify</h1>
+<h2>ProccessSpotifyResponse</h2>
+
+@if (Model.HuboError)
+{
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>No se pudo auntenticar con spotify</h1>
+        </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12 text-center">
-        <p>Hubo un error al tratar de autenticarse con spotify, por favor vuelta a intentarlo y si el error persiste pongase en contacto con el administrador.</p>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p>Hubo un error al tratar de autenticarse con spotify, por favor vuelta a intentarlo y si el error persiste pongase en contacto con el administrador.</p>
+        </div>
     </div>
-</div>
+}
+else
+{
+    @section scripts{
+        <script>
+            $(document).ready(function() {
+                setTimeout(function () {
+                    window.close();
+                    window.opener.location.reload();
+                }, 3000);
+            });
+        </script>
+    }
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Autenticacion Exitosa!!</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <p>La ventana emergente se cerrara en unos segundos.</p>
+        </div>
+    </div>
+}

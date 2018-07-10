@@ -6,7 +6,10 @@ var loginModule = function () {
     };
 
     var _openSpotifyAuthorizationScreen = function () {
-        window.open(_settings.urlRequestAuthorizationToSpotify, "_blank ", "width=400,height=400");
+        var result = window.open(_settings.urlRequestAuthorizationToSpotify, "_blank ", "width=500,height=700");
+        if (result && result.closed()) {
+            location.reload();
+        }
         return false;
     };
 
