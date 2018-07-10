@@ -30,6 +30,13 @@ namespace my_spotify_client.Providers.SpotifyProvider
             }
         }
 
+        protected static class AuthEndPoints
+        {
+            public static readonly string Authorize = "/authorize";
+            public static readonly string Token = "/api/token";
+        }
+
+
         protected async Task<SpotifyToken> GetTokenAsync()
         {
             var token = SessionManager.SpotifyToken;
@@ -53,7 +60,7 @@ namespace my_spotify_client.Providers.SpotifyProvider
             {
                 BaseAddress = new Uri(AppSettingsManager.SpotifyAccountsBaseAddressUrl)
             };
-            var request = new HttpRequestMessage(HttpMethod.Post, SpotifyProvider.SpotifyEndPoints.token);
+            var request = new HttpRequestMessage(HttpMethod.Post, AuthEndPoints.Token);
             var keyValues = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "refresh_token"),

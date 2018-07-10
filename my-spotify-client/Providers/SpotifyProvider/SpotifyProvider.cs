@@ -23,42 +23,12 @@ namespace my_spotify_client.Providers.SpotifyProvider
             return _instance;
         }
 
-        public static class SpotifyEndPoints
+        public AuthProvider Auth
         {
-            public static readonly string Authorize = "/authorize";
-            public static readonly string token = "/api/token";
-        }
-
-        public string GetAuthorizationUrl(string state)
-        {
-            var authorizeUrl = AppSettingsManager.SpotifyAccountsBaseAddressUrl + SpotifyEndPoints.Authorize + "?";
-
-            authorizeUrl += "client_id=" + AppSettingsManager.ClientId + "&";
-            authorizeUrl += "response_type=code&";
-            authorizeUrl += "redirect_uri=" + AppSettingsManager.RedirectUri + "&";
-            authorizeUrl += "scope=user-read-private user-read-email&";
-            authorizeUrl += "state=" + state;
-
-            return authorizeUrl;
-        }
-
-        public async Task LoadAuthorizationTokenAsync(string code)
-        {
-            var httpClient = new HttpClient
+            get
             {
-                BaseAddress = new Uri(AppSettingsManager.SpotifyAccountsBaseAddressUrl)
-            };
-            var request = new HttpRequestMessage(HttpMethod.Post, SpotifyEndPoints.token);
-            var keyValues = new List<KeyValuePair<string, string>>
-            {
-                new KeyValuePair<string, string>("grant_type", "authorization_code"),
-                new KeyValuePair<string, string>("code", code),
-                new KeyValuePair<string, string>("redirect_uri", AppSettingsManager.RedirectUri),
-            };
-            request.Content = new FormUrlEncodedContent(keyValues);
-            request.Headers.Authorization = new AuthenticationHeaderValue("Basic", GetAuthenticationHeaderInBase64());
-
-            SessionManager.SpotifyToken = await httpClient.SendAsync(request).Result.Content.ReadAsAsync<SpotifyToken>();
+                return AuthProvider.Instance();
+            }
         }
 
         public async Task<User> GetUserProfileAsync()

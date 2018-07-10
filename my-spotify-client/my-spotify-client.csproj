@@ -145,6 +145,7 @@
     <Compile Include="Models\SpotifyToken.cs" />
     <Compile Include="Models\WebClient\IndexModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\SpotifyProvider\AuthProvider.cs" />
     <Compile Include="Providers\SpotifyProvider\SpotifyBaseProvider.cs" />
     <Compile Include="Providers\SpotifyProvider\Entities\Image.cs" />
     <Compile Include="Providers\SpotifyProvider\Entities\User.cs" />
