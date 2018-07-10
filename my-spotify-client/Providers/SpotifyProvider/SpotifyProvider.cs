@@ -1,15 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Web;
-using System.Web.Mvc;
+using System.Web.Http;
 using my_spotify_client.Common.AppSettingsManager;
-using my_spotify_client.Controllers;
 using my_spotify_client.Models;
 
-namespace my_spotify_client.Providers
+namespace my_spotify_client.Providers.SpotifyProvider
 {
     public class SpotifyProvider
     {
@@ -30,9 +27,15 @@ namespace my_spotify_client.Providers
             }
         }
 
+        public static class SpotifyEndPoints
+        {
+            public static readonly string Authorize = "/authorize";
+            public static readonly string token = "/api/token";
+        }
+
         public string GetSpotifyAuthorizationUrl(string state)
         {
-            var authorizeUrl = AppSettingsManager.SpotifyAccountsUrl + "/authorize?";
+            var authorizeUrl = AppSettingsManager.SpotifyAccountsUrl + SpotifyEndPoints.Authorize + "?";
 
             authorizeUrl += "client_id=" + AppSettingsManager.ClientId + "&";
             authorizeUrl += "response_type=code&";
@@ -43,13 +46,13 @@ namespace my_spotify_client.Providers
             return authorizeUrl;
         }
 
-        public async Task<SpotifyToken> GetSpotifyTokenAsync(string code)
+        public async Task<SpotifyToken> GetTokenAsync(string code)
         {
             var httpClient = new HttpClient
             {
                 BaseAddress = new Uri(AppSettingsManager.SpotifyAccountsUrl)
             };
-            var request = new HttpRequestMessage(HttpMethod.Post, "/api/token");
+            var request = new HttpRequestMessage(HttpMethod.Post, SpotifyEndPoints.token);
             var keyValues = new List<KeyValuePair<string, string>>
             {
                 new KeyValuePair<string, string>("grant_type", "authorization_code"),

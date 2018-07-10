@@ -13,6 +13,7 @@ using my_spotify_client.Common.AppSettingsManager;
 using my_spotify_client.Common.SessionManager;
 using my_spotify_client.Models;
 using my_spotify_client.Providers;
+using my_spotify_client.Providers.SpotifyProvider;
 
 namespace my_spotify_client.Controllers
 {
@@ -44,7 +45,9 @@ namespace my_spotify_client.Controllers
 
         public ActionResult Index()
         {
-            if (SessionManager.SpotifyToken == null) return View();//View(null);
+            if (SessionManager.SpotifyToken == null) return View();
+
+            //var 
             return null;
         }
 
@@ -59,7 +62,7 @@ namespace my_spotify_client.Controllers
             if (!string.IsNullOrWhiteSpace(error) || 
                 !state.Equals(SessionManager.State)) return View(new ProccessSpotifyResponseModel(true, error));
 
-            SessionManager.SpotifyToken = await SpotifyProvider.GetSpotifyTokenAsync(code);
+            SessionManager.SpotifyToken = await SpotifyProvider.GetTokenAsync(code);
             return View(new ProccessSpotifyResponseModel(false, string.Empty));
         }
     }
