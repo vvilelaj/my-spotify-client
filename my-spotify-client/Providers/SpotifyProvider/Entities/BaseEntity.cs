@@ -5,8 +5,8 @@ using System.Web;
 
 namespace my_spotify_client.Providers.SpotifyProvider.Entities
 {
-    public class Image
+    public class BaseEntity
     {
-        public string Url { get; set; }
+        public string Href { get; set; }
     }
 }

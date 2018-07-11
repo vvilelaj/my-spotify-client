@@ -36,7 +36,7 @@ namespace my_spotify_client.Providers.SpotifyProvider
             public static readonly string Token = "/api/token";
         }
 
-        protected async Task<SpotifyToken> GetTokenAsync()
+        private async Task<SpotifyToken> GetTokenAsync()
         {
             var token = SessionManager.SpotifyToken;
             var now = DateTime.Now;
@@ -76,6 +76,18 @@ namespace my_spotify_client.Providers.SpotifyProvider
             var bytes = Encoding.UTF8.GetBytes(authValue);
             var authValueBase64 = Convert.ToBase64String(bytes);
             return authValueBase64;
+        }
+
+        protected HttpClient GetHttpClient()
+        {
+            var httpClient = new HttpClient()
+            {
+                BaseAddress = new Uri(AppSettingsManager.SpotifyBaseUrl)
+            };
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", GetTokenAsync().Result.Access_Token);
+
+            return httpClient;
         }
     }
 }

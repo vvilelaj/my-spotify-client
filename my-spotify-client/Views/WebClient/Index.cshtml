@@ -48,9 +48,30 @@ else
     {
         <div class="row">
             <div class="col-md-12 text-center">
-                <img src="@Model.UserProfile.Images[0].url" />
+                <img src="@Model.UserProfile.Images[0].Url" />
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-12">
+                &nbsp;
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Playlists</div>
+            <div class="panel-body">
+                <ul class="list-group">
+                    @foreach (var playlist in Model.Playlists.Items)
+                    {
+                        <li class="list-group-item"><img class="img-responsive" src="@playlist.Images[0].Url" style="width: 100px; height: 100px;" /> @playlist.Name</li>
+                    }
+                </ul>
+            </div>
+        </div>
+
+
+
+        
+
     }
 }
 

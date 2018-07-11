@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
-namespace my_spotify_client.Providers.SpotifyProvider.Entities
+namespace my_spotify_client.Providers.SpotifyProvider.Entities.UserProfile
 {
-    public class User
+    public class User : BaseEntity
     {
         public User()
         {
@@ -14,7 +12,6 @@ namespace my_spotify_client.Providers.SpotifyProvider.Entities
         }
         public string Id { get; set; }
         public string Display_Name { get; set; }
-        public string Href { get; set; }
         public List<Image> Images { get; set; }
         public DateTime CreatedDate { get; set; }
     }

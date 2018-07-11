@@ -51,7 +51,7 @@ namespace my_spotify_client.Controllers
             if (SessionManager.SpotifyToken == null) return View(indexModel);
 
             indexModel.UserProfile = await SpotifyProvider.UserProfile.GetUserProfileAsync();
-
+            indexModel.Playlists = await SpotifyProvider.Playlists.GetPlaylistsAsync();
             return View(indexModel);
         }
 

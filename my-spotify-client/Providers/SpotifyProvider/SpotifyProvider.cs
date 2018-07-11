@@ -39,5 +39,13 @@ namespace my_spotify_client.Providers.SpotifyProvider
                 return UserProfileProvider.Instance();
             }
         }
+
+        public PlaylistsProvider Playlists
+        {
+            get
+            {
+                return PlaylistsProvider.Instance();
+            }
+        }
     }
 }

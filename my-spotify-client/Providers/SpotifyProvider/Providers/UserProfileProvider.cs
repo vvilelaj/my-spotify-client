@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using my_spotify_client.Providers.SpotifyProvider.Entities;
+using my_spotify_client.Providers.SpotifyProvider.Entities.UserProfile;
 
 namespace my_spotify_client.Providers.SpotifyProvider.Providers
 {
@@ -19,14 +20,7 @@ namespace my_spotify_client.Providers.SpotifyProvider.Providers
 
         public async Task<User> GetUserProfileAsync()
         {
-            var httpClient = new HttpClient()
-            {
-                BaseAddress = new Uri(AppSettingsManager.SpotifyBaseUrl)
-            };
-            httpClient.DefaultRequestHeaders.Clear();
-            httpClient.DefaultRequestHeaders.Authorization =new AuthenticationHeaderValue("Bearer", GetTokenAsync().Result.Access_Token);
-
-            var userProfile = await httpClient.GetAsync(AppSettingsManager.SpotifyBaseUrl + "/v1/me").Result.Content.ReadAsAsync<User>();
+            var userProfile = await GetHttpClient().GetAsync(AppSettingsManager.SpotifyBaseUrl + "/v1/me").Result.Content.ReadAsAsync<User>();
 
             return userProfile;
         }
