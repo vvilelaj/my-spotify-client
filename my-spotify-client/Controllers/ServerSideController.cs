@@ -18,7 +18,7 @@ using my_spotify_client.Providers.SpotifyProvider;
 
 namespace my_spotify_client.Controllers
 {
-    public partial class WebClientController : Controller
+    public class ServerSideController : Controller
     {
         private SessionManager SessionManager
         {

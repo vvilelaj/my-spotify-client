@@ -128,7 +128,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\WebClient\Index.js" />
     <Content Include="Web.config" />
-    <Content Include="Views\WebClient\ProccessSpotifyResponse.cshtml" />
+    <Content Include="Views\ServerSide\ProccessSpotifyResponse.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -137,7 +137,7 @@
     <Compile Include="Common\AppSettingsManager\AppSettingsManager.cs" />
     <Compile Include="Common\SessionKey.cs" />
     <Compile Include="Common\SessionManager\SessionManager.cs" />
-    <Compile Include="Controllers\WebClientController.cs" />
+    <Compile Include="Controllers\ServerSideController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -164,7 +164,7 @@
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\WebClient\Index.cshtml" />
+    <Content Include="Views\ServerSide\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
