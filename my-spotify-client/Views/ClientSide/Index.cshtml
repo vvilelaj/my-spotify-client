@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@section scripts
+{
+    <script type="text/javascript" src="~/Scripts/ClientSide/Index.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var urlHash = location.hash;
+            loginModule.init(urlHash);
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col-md-12">
+        &nbsp;
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12 text-center">
+        <h3>Implicit Grant Flow</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary btn-lg" type="button" onclick="loginModule.login();">
+            <i class="fab fa-spotify fa-1x"></i> LogIn into Spotify
+        </button>
+    </div>
+</div>
+
